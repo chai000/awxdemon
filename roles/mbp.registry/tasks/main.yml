@@ -15,11 +15,13 @@
 
 - name: stop {{ service_name }} service
   shell: ./service.sh stop
+  ignore_errors: True
   args:
     chdir: "{{ project_dir }}/{{ service_name }}/bin/"
 
 - name: backup {{ service_name }} service
   shell: /usr/sbin/cbak mv {{ service_name }}
+  ignore_errors: True
   args:
     chdir: "{{ project_dir }}/"
 
