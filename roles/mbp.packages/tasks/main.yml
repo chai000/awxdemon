@@ -6,3 +6,6 @@
 
 - name: create installation folder
   file: path="{{ installation_dir }}" state=directory
+  
+- name: create project folder
+  file: path="{{ project_dir }}" state=directory
