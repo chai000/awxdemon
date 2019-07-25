@@ -9,7 +9,7 @@
 
 - name: unarchive package
   unarchive:
-    src: "{{ installation_dir }}/{{ project }}-{{ service_name }}-{{ version }}.tar.gz"
+    remote_src: "{{ installation_dir }}/{{ project }}-{{ service_name }}-{{ version }}.tar.gz"
     dest: "{{ installation_dir }}"
 
 - name: stop {{ service_name }} service
