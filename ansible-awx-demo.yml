@@ -1,7 +1,7 @@
 - hosts: mbp_hosts
   roles:
     - mbp.packages
-    - mbp.registry
+#    - mbp.registry
     - mbp.zipkin
     - mbp.video
     - mbp.user

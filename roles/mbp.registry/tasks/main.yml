@@ -13,17 +13,28 @@
     src: "{{ installation_dir }}/{{ project }}-{{ service_name }}-{{ version }}.tar.gz"
     dest: "{{ installation_dir }}"
 
+- name: check if stop command file exists
+  stat:
+    path: "{{ project_dir }}/{{ service_name }}/bin/service.sh"
+  register: stop_command_file
+
 - name: stop {{ service_name }} service
   shell: ./service.sh stop
-  ignore_errors: True
   args:
     chdir: "{{ project_dir }}/{{ service_name }}/bin/"
+  when: stop_command_file.stat.exists == True
+  
+- name: check if backup command file exists
+  stat:
+    path: /usr/sbin/cbak
+  register: backup_command_file
 
 - name: backup {{ service_name }} service
   shell: /usr/sbin/cbak mv {{ service_name }}
   ignore_errors: True
   args:
     chdir: "{{ project_dir }}/"
+  when: backup_command_file.stat.exists == True
 
 - name: mv new {{ service_name }} service
   shell: mv {{ installation_dir }}/{{ service_name }}/  {{ project_dir }}/
