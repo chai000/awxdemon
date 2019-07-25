@@ -1,0 +1,21 @@
+remote_user: root
+become_user: root
+become: true
+
+project: mbp
+version: 1.0.0
+#build: g63782e4
+env: dev
+date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
+source_dir: /opt/install/{{ project }}/{{ date }}
+installation_dir: /opt/install/{{ project }}/{{ date }}
+project_dir: /opt/app/{{ project }}
+
+packages_server: 192.168.1.74
+packages_user: root
+packages_dir: /opt/install/packages/RELEASES
+
+
+
+
+

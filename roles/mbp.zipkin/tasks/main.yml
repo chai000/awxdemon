@@ -1,0 +1,30 @@
+---
+
+# Deploy cc module
+- name: upload {{ service_name }} package
+  copy:
+    src: "{{ source_dir }}/{{ project }}-{{ service_name }}-{{ version }}.tar.gz"
+    dest: "{{ installation_dir }}"
+
+- name: unarchive package
+  unarchive:
+    src: "{{ installation_dir }}/{{ project }}-{{ service_name }}-{{ version }}.tar.gz"
+    dest: "{{ installation_dir }}"
+
+- name: stop {{ service_name }} service
+  shell: ./service.sh stop
+  args:
+    chdir: {{ project_dir }}/{{ service_name }}/bin/
+
+- name: backup {{ service_name }} service
+  shell: /usr/sbin/cbak mv {{ service_name }}
+  args:
+    chdir: {{ project_dir }}
+
+- name: mv new {{ service_name }} service
+  shell: mv {{ installation_dir }}/{{ service_name }}/  {{ project_dir }}/
+
+- name: start {{ service_name }} service
+  shell: ./service.sh start {{ env }}
+  args:
+    chdir: {{ project_dir }}/{{ service_name }}/bin

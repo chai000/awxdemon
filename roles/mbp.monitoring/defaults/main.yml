@@ -1,0 +1,9 @@
+monitoring_packages:
+  - nrpe
+  - nagios-plugins-nrpe
+  - nagios-plugins-procs
+  - nagios-plugins-tcp
+
+# services to enable and start
+monitoring_services:
+  - nrpe

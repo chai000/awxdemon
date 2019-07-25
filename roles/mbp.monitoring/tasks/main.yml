@@ -1,0 +1,30 @@
+---
+- name: install packages
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{monitoring_packages}}"
+
+- name: create symlink at /usr/lib/nagios
+  file:
+    src: /usr/lib64/nagios
+    dest: /usr/lib/nagios
+    state: link
+    owner: root
+    group: root
+
+- name: centos7 nrpe agent config
+  template:
+    src: "{{role_path}}/templates/etc/nrpe.d/mbp.cfg"
+    dest: /etc/nrpe.d/mbp.cfg
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nrpe service
+
+- name: ensure services are enabled and started
+  service:
+    name: "{{item}}"
+    state: started
+    enabled: yes
+  with_items: "{{monitoring_services}}"

@@ -1,0 +1,8 @@
+---
+
+# Copy packages
+#- name: Copy packages
+#  local_action: shell scp -P 22 -r {{ packages_user }}@{{ packages_server }}:{{ packages_dir }}/{{ version }} {{ source_dir }}
+
+- name: create installation folder
+  file: path="{{ installation_dir }}" state=directory
